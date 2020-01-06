@@ -9,5 +9,5 @@ public interface Connections<T> {
 
     void disconnect(int connectionId);
 
-    void addConnection(ConnectionHandler handler);
+    int addConnection(ConnectionHandler handler);
 }

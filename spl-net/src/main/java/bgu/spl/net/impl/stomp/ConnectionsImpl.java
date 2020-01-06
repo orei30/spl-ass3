@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConnectionsImpl<T> implements Connections<T> {
+public class ConnectionsImpl implements Connections<String> {
     private Map<Integer, ConnectionHandler> connections;
     private Map<ConnectionHandler, User> users;
     private Map<String, List<User>> topics;
@@ -21,7 +21,7 @@ public class ConnectionsImpl<T> implements Connections<T> {
     }
 
     @Override
-    public boolean send(int connectionId, T msg) {
+    public boolean send(int connectionId, String msg) {
         if(connections.containsKey(connectionId)) {
             connections.get(connectionId).send(msg);
             return true;
@@ -30,7 +30,7 @@ public class ConnectionsImpl<T> implements Connections<T> {
     }
 
     @Override
-    public void send(String channel, T msg) {
+    public void send(String channel, String msg) {
         for(User user : topics.get(channel))
             send(user.getId(), msg);
     }
@@ -43,7 +43,22 @@ public class ConnectionsImpl<T> implements Connections<T> {
     }
 
     @Override
-    public void addConnection(ConnectionHandler handler) {
-        connections.put(nextId++, handler);
+    public int addConnection(ConnectionHandler handler) {
+        int id = nextId++;
+        connections.put(id, handler);
+        return id;
     }
+
+//    public User getUserById(int id) {
+//        return users.get(id);
+//    }
+//
+//    public User getUserByUsername(String username) {
+//        for(int id : users.keySet()) {
+//            if(users.get(id).getUsername().equals(username))
+//                return users.get(id);
+//        }
+//        return null;
+//    }
+
 }
