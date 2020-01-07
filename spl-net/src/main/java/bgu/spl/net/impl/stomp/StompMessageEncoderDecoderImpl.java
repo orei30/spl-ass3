@@ -9,7 +9,7 @@ public class StompMessageEncoderDecoderImpl implements StompMessageEncoderDecode
     private int len = 0;
 
     public String decodeNextByte(byte nextByte) {
-        if (nextByte == '\n') {
+        if (nextByte == '\u0000') {
             return popString();
         }
 
@@ -18,7 +18,7 @@ public class StompMessageEncoderDecoderImpl implements StompMessageEncoderDecode
     }
 
     public byte[] encode(String message) {
-        return (message + "\n").getBytes();
+        return (message).getBytes();
     }
 
     private void pushByte(byte nextByte) {

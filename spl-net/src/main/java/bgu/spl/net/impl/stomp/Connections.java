@@ -16,4 +16,8 @@ public interface Connections<T> {
     User getUser(String username);
 
     void addNewUser(User user);
+
+    void addUserToTopic(String topic, User user);
+
+    void deleteUserFromTopic(String topic, User user);
 }

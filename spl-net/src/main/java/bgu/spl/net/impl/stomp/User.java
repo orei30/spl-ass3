@@ -2,20 +2,24 @@ package bgu.spl.net.impl.stomp;
 
 import bgu.spl.net.srv.ConnectionHandler;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class User {
     private String username;
     private String password;
     private boolean isConnected;
-    private List<String> Topics;
+    private Map<Integer, String> topics;
+    private Integer connectionHandlerId;
 
-    public User(String username, String password) {
+    public User(String username, String password, Integer connectionHandlerId) {
         this.username = username;
         this.password = password;
+        this.connectionHandlerId = connectionHandlerId;
         this.isConnected = true;
-        this.Topics = new LinkedList<>();
+        this.topics = new HashMap<>();
     }
 
     public String getUsername() {
@@ -34,8 +38,12 @@ public class User {
         this.password = password;
     }
 
-    public void addTopic(String topic) {
-        Topics.add(topic);
+    public void addTopic(Integer id, String topic) {
+        topics.put(id, topic);
+    }
+
+    public String deleteTopicFromUser(Integer id) {
+        return topics.remove(id);
     }
 
     public boolean isConnected() {
@@ -45,4 +53,12 @@ public class User {
     public void logIn() {isConnected = true;}
 
     public void logOut() {isConnected = false;}
+
+    public Integer getConnectionHandlerId() {
+        return connectionHandlerId;
+    }
+
+    public void setConnectionHandlerId(Integer connectionHandlerId) {
+        this.connectionHandlerId = connectionHandlerId;
+    }
 }

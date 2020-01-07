@@ -20,7 +20,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             String passcode = msg.getHeader("passcode");
             user = connections.getUser(username);
             if(user == null) {
-                user = new User(username, passcode);
+                user = new User(username, passcode, connectionId);
                 connections.addNewUser(user);
             } else{
                 if(user.getPassword().equals(passcode))
@@ -32,16 +32,25 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             }
         }
         if(msg.getCommand().equals("SUBSCRIBE")) {
-
+            String genre  = msg.getHeader("destination");
+            Integer id = Integer.valueOf(msg.getHeader("id"));
+            user.addTopic(id, genre);
+            connections.addUserToTopic(genre, user);
+            //TODO: send receipt;
         }
         if(msg.getCommand().equals("UNSUBSCRIBE")) {
-
+            Integer id = Integer.valueOf(msg.getHeader("id"));
+            connections.deleteUserFromTopic(user.deleteTopicFromUser(id), user);
+            //TODO: send receipt;
         }
         if(msg.getCommand().equals("SEND")) {
-
+            String topic  = msg.getHeader("destination");
+            String messageBody = msg.getBody();
+            //TODO: create message and send it;
+//            connections.send(topic);
         }
         if(msg.getCommand().equals("DISCONNECT")) {
-
+            //TODO: disconnect after sending all needed receipts
         }
     }
 

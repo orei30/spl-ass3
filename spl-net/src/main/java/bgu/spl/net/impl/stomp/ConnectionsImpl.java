@@ -2,6 +2,7 @@ package bgu.spl.net.impl.stomp;
 
 import bgu.spl.net.srv.ConnectionHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConnectionsImpl<T> implements Connections<T> {
     private Map<Integer, ConnectionHandler<T>> connections;
     private Map<String, User> users;
-    private Map<String, List<String>> topics;
+    private Map<String, List<User>> topics;
     private int nextId;
 
     public ConnectionsImpl() {
@@ -29,15 +30,15 @@ public class ConnectionsImpl<T> implements Connections<T> {
     }
 
     public void send(String channel, T msg) {
-//        for(User user : topics.get(channel))
-//            send(user.getId(), msg);
+        for(User user : topics.get(channel))
+            send(user.getConnectionHandlerId(), msg);
     }
 
     @Override
     public void disconnect(int connectionId) {
-//        connections.remove(connectionId);
-//        for(String topic : topics.keySet())
-//            topics.get(topic).remove(connectionId);
+        connections.remove(connectionId);
+        for(String topic : topics.keySet())
+            topics.get(topic).remove(connectionId);
     }
 
     @Override
@@ -62,6 +63,20 @@ public class ConnectionsImpl<T> implements Connections<T> {
         users.put(user.getUsername(), user);
     }
 
+    @Override
+    public void addUserToTopic(String topic, User user) {
+        List topicUsersList = topics.get(topic);
+        if(topicUsersList == null) {
+            topicUsersList = new ArrayList();
+            topics.put(topic, topicUsersList);
+        }
+        topicUsersList.add(user);
+    }
+
+    @Override
+    public void deleteUserFromTopic(String topic, User user) {
+        topics.get(topic).remove(user);
+    }
 
 //    public User getUserById(int id) {
 //        return users.get(id);
