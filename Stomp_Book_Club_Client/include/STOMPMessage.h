@@ -1,6 +1,8 @@
 #ifndef STOMP_MESSAGE_
 #define STOMP_MESSAGE_
 
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -14,6 +16,7 @@ class STOMPMessage {
         string _body;
     public:
         STOMPMessage();
+        STOMPMessage(string);
         void setCommand(string command);
         string getCommand();
         void addHeader(string, string);

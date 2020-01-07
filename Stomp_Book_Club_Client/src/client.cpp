@@ -58,10 +58,10 @@ string Client::getLender(string bookName)
 
 void Client::sendDataToServer()
 {
-    string command;
-    cin >> command;
     while (true)
     {
+        string command;
+        cin >> command;
         if (command == "login")
             login();
         if (command == "join")
@@ -83,48 +83,23 @@ void Client::sendDataToServer()
 
 void Client::getDataFromServer()
 {
-    int lineIndex = 0;
-    while (_connected)
+    // STOMPMessage message;
+    // int lineIndex = 0;
+    while (true)
     {
-        const short bufsize = 1024;
-        string answer;
-        if (!_connectionHandler->getLine(answer))
+        if (_connected)
         {
-            cout << "Disconnected. Exiting...\n" << endl;
-            break;
-        }
-        STOMPMessage message;
-        if (lineIndex == 0)
-        {
-            message.setCommand(answer);
-            lineIndex = lineIndex + 1;
-        }
-        else
-        {
-            bool header = true;
-            if (answer == "")
-                header = false;
-            if (header)
+            const short bufsize = 1024;
+            string frame;
+            if (!_connectionHandler->getFrameAscii(frame, '^@'))
             {
-                int colonIndex = answer.find(":");
-                string title = answer.substr(0, colonIndex);
-                string value = answer.substr(colonIndex + 1);
-                message.addHeader(title, value);
-                lineIndex = lineIndex + 1;
+                cout << "Disconnected. Exiting...\n"
+                     << endl;
+                break;
             }
-            else
-            {
-                if (answer != "^@")
-                {
-                    message.addBody(answer);
-                    lineIndex = lineIndex + 1;
-                }
-                else
-                    lineIndex = 0;
-            }
+            // STOMPMessage message(frame);
+            cout << frame << endl;
         }
-        cout << message.get() << endl;
-        // messageHandler(message);
     }
 }
 
@@ -151,7 +126,7 @@ void Client::login()
     stompMessage.addHeader("passcode", password);
     string message(stompMessage.get());
     const short bufsize = 1024;
-    if (!_connectionHandler->sendFrameAscii(message, bufsize))
+    if (!_connectionHandler->sendFrameAscii(message, '\0'))
     {
         cout << "Could not connect to server" << endl;
     }
