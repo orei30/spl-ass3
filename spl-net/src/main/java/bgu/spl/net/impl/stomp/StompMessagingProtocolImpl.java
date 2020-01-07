@@ -5,7 +5,7 @@ import bgu.spl.net.api.StompMessagingProtocol;
 public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> {
     private boolean shouldTerminate = false;
     private int connectionId;
-    private Connections connections;
+    private Connections<String> connections;
     private User user;
 
     public void start(int connectionId, Connections<String> connections) {
@@ -23,9 +23,14 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
                 user = new User(username, passcode, connectionId);
                 connections.addNewUser(user);
             } else{
-                if(user.getPassword().equals(passcode))
+                if(user.getPassword().equals(passcode)) {
                     //TODO: send connected frame
+                    Message retmsg = new Message();
+                    retmsg.setCommand("CONNECTED");
+                    retmsg.addHeader("version:1.2");
                     user.logIn();
+                    connections.send(connectionId,retmsg.toString());
+                }
                 else
                     //TODO: wrong passcode frame
                     connections.disconnect(connectionId);
