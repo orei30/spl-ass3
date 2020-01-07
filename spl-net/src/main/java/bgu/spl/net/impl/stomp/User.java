@@ -6,24 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class User {
-    private int id;
     private String username;
     private String password;
+    private boolean isConnected;
     private List<String> Topics;
 
-    public User(int id, String username, String password, ConnectionHandler handler) {
-        this.id = id;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.isConnected = true;
         this.Topics = new LinkedList<>();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -45,4 +37,12 @@ public class User {
     public void addTopic(String topic) {
         Topics.add(topic);
     }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void logIn() {isConnected = true;}
+
+    public void logOut() {isConnected = false;}
 }

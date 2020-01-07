@@ -6,6 +6,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
     private boolean shouldTerminate = false;
     private int connectionId;
     private Connections connections;
+    private User user;
 
     public void start(int connectionId, Connections<String> connections) {
         this.connectionId = connectionId;
@@ -17,9 +18,17 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
         if(msg.getCommand().equals("CONNECT")) {
             String username = msg.getHeader("login");
             String passcode = msg.getHeader("passcode");
-            if(connections)
-            if(connections.getUserByUsername(username) == null) {
-
+            user = connections.getUser(username);
+            if(user == null) {
+                user = new User(username, passcode);
+                connections.addNewUser(user);
+            } else{
+                if(user.getPassword().equals(passcode))
+                    //TODO: send connected frame
+                    user.logIn();
+                else
+                    //TODO: wrong passcode frame
+                    connections.disconnect(connectionId);
             }
         }
         if(msg.getCommand().equals("SUBSCRIBE")) {
@@ -34,8 +43,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
         if(msg.getCommand().equals("DISCONNECT")) {
 
         }
-        if(msg.getCommand().equals(""))
-            shouldTerminate = "UNRGISTERED".equals(msg.getCommand());
     }
 
     public boolean shouldTerminate() {

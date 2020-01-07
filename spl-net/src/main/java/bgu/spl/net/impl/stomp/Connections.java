@@ -10,4 +10,10 @@ public interface Connections<T> {
     void disconnect(int connectionId);
 
     int addConnection(ConnectionHandler handler);
+
+    boolean userConnected(String username);
+
+    User getUser(String username);
+
+    void addNewUser(User user);
 }

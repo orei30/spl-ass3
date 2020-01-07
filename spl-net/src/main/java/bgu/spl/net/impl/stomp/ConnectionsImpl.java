@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConnectionsImpl implements Connections<String> {
-    private Map<Integer, ConnectionHandler> connections;
-    private Map<ConnectionHandler, User> users;
-    private Map<String, List<User>> topics;
+public class ConnectionsImpl<T> implements Connections<T> {
+    private Map<Integer, ConnectionHandler<T>> connections;
+    private Map<String, User> users;
+    private Map<String, List<String>> topics;
     private int nextId;
 
     public ConnectionsImpl() {
@@ -20,8 +20,7 @@ public class ConnectionsImpl implements Connections<String> {
         nextId = 0;
     }
 
-    @Override
-    public boolean send(int connectionId, String msg) {
+    public boolean send(int connectionId, T msg) {
         if(connections.containsKey(connectionId)) {
             connections.get(connectionId).send(msg);
             return true;
@@ -29,17 +28,16 @@ public class ConnectionsImpl implements Connections<String> {
         return false;
     }
 
-    @Override
-    public void send(String channel, String msg) {
-        for(User user : topics.get(channel))
-            send(user.getId(), msg);
+    public void send(String channel, T msg) {
+//        for(User user : topics.get(channel))
+//            send(user.getId(), msg);
     }
 
     @Override
     public void disconnect(int connectionId) {
-        connections.remove(connectionId);
-        for(String topic : topics.keySet())
-            topics.get(topic).remove(connectionId);
+//        connections.remove(connectionId);
+//        for(String topic : topics.keySet())
+//            topics.get(topic).remove(connectionId);
     }
 
     @Override
@@ -48,6 +46,22 @@ public class ConnectionsImpl implements Connections<String> {
         connections.put(id, handler);
         return id;
     }
+
+    @Override
+    public boolean userConnected(String username) {
+        return users.get(username).isConnected();
+    }
+
+    @Override
+    public User getUser(String username) {
+        return users.get(username);
+    }
+
+    @Override
+    public void addNewUser(User user) {
+        users.put(user.getUsername(), user);
+    }
+
 
 //    public User getUserById(int id) {
 //        return users.get(id);

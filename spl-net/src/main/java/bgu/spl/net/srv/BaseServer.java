@@ -17,6 +17,7 @@ public abstract class BaseServer<T> implements Server<T> {
     private final Supplier<MessagingProtocol<T>> protocolFactory;
     private final Supplier<MessageEncoderDecoder<T>> encdecFactory;
     private ServerSocket sock;
+    private Connections<T> connections;
 
     public BaseServer(
             int port,
@@ -40,6 +41,7 @@ public abstract class BaseServer<T> implements Server<T> {
                         clientSock,
                         encdecFactory.get(),
                         (StompMessagingProtocol<T>) protocolFactory.get());
+                connections.addConnection(handler);
                 execute(handler);
             }
         } catch (IOException ex) {
