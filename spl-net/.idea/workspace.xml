@@ -2,13 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b661f945-c916-4a76-9ec4-3fcb8be627a4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/newsfeed/NewsFeedServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/newsfeed/NewsFeedServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/ConnectionsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/ConnectionsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/StompMessagingProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/StompMessagingProtocolImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/StompServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/impl/stomp/StompServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BaseServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BaseServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BlockingConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BlockingConnectionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/NonBlockingConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/NonBlockingConnectionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/Reactor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/Reactor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +45,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1577722387368" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/apache-activemq-5.15.11/examples/stomp/java" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -58,6 +64,7 @@
     <configuration name="StompServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bgu.spl.net.impl.stomp.StompServer" />
       <module name="spl-net" />
+      <option name="PROGRAM_PARAMETERS" value="5555 reactor" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="bgu.spl.net.impl.stomp.*" />
@@ -114,63 +121,51 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="588" y="214" width="800" height="677" key="#Project_Structure/67.27.1853.1053@67.27.1853.1053" timestamp="1578327091562" />
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578328940703">
+    <state x="644" y="273" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578498377058">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578328940703" />
+    <state x="644" y="273" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578498377058" />
     <state x="541" y="165" width="328" height="398" key="#com.intellij.ide.util.MemberChooser" timestamp="1578419333141">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="541" y="165" width="328" height="398" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1578419333141" />
     <state x="801" y="265" width="374" height="575" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1578402790981" />
-    <state x="565" y="288" width="304" height="150" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578417679283">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="834" y="444" width="304" height="150" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578492420305">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="565" y="288" width="304" height="150" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1366.728@0.0.1366.728" timestamp="1578417679283" />
-    <state x="834" y="444" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578326287747" />
+    <state x="834" y="444" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578492420305" />
+    <state x="571" y="210" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1578492396302">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="571" y="210" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1578492396302" />
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1578331831484">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578331831484" />
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1578326551502">
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1578500672309">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1578326551502" />
-    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1578398958720">
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1578500672309" />
+    <state width="881" height="400" key="GridCell.Tab.0.bottom" timestamp="1578501607269">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578398958720" />
-    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1578398958719">
+    <state width="881" height="400" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578501607269" />
+    <state width="881" height="400" key="GridCell.Tab.0.center" timestamp="1578501607269">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578398958719" />
-    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1578398958718">
+    <state width="881" height="400" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578501607269" />
+    <state width="881" height="400" key="GridCell.Tab.0.left" timestamp="1578501607268">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578398958718" />
-    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1578398958720">
+    <state width="881" height="400" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578501607268" />
+    <state width="881" height="400" key="GridCell.Tab.0.right" timestamp="1578501607269">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578398958720" />
+    <state width="881" height="400" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578501607269" />
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578326176922">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578326176922" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

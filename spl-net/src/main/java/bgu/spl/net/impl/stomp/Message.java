@@ -10,18 +10,24 @@ public class Message {
     private String body;
 
     public Message() {
+        headers = new HashMap<>();
+        body = "";
     }
 
     public Message(String msg) {
+        System.out.println("message: " + msg);
         String[] detailes = msg.split("\n");
         command = detailes[0];
         headers = new HashMap<>();
-        int i = 0;
-        while (detailes[i++] != "") {
+        int i = 1;
+        while (!detailes[i].equals("")) {
             addHeader(detailes[i]);
+            i++;
         }
-        while (detailes[i++] != "^@") {
+        i++;
+        while (!detailes[i].equals("^@")) {
             body = body + detailes[i];
+            i++;
         }
     }
 
@@ -56,6 +62,9 @@ public class Message {
         String headersString = "";
         for (Map.Entry<String, String> header : headers.entrySet())
             headersString = header.getKey() + ":" + header.getValue() + "\n";
-        return command + "\n" + headersString + "\n" + getBody() + "\n^@";
+        if(getBody() == "")
+            return command + "\n" + headersString + "\n^@";
+        else
+            return command + "\n" + headersString + "\n" + getBody() + "\n^@";
     }
 }

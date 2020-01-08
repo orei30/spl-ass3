@@ -2,6 +2,7 @@ package bgu.spl.net.impl.stomp;
 
 import bgu.spl.net.srv.ConnectionHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,9 +37,14 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     @Override
     public void disconnect(int connectionId) {
-        connections.remove(connectionId);
         for(String topic : topics.keySet())
             topics.get(topic).remove(connectionId);
+        try {
+            connections.get(connectionId).close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        connections.remove(connectionId);
     }
 
     @Override
@@ -77,17 +83,4 @@ public class ConnectionsImpl<T> implements Connections<T> {
     public void deleteUserFromTopic(String topic, User user) {
         topics.get(topic).remove(user);
     }
-
-//    public User getUserById(int id) {
-//        return users.get(id);
-//    }
-//
-//    public User getUserByUsername(String username) {
-//        for(int id : users.keySet()) {
-//            if(users.get(id).getUsername().equals(username))
-//                return users.get(id);
-//        }
-//        return null;
-//    }
-
 }

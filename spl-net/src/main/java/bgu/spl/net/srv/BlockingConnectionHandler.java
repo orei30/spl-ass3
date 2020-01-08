@@ -10,6 +10,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 
 public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler<T> {
 
@@ -40,7 +41,7 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
             while (!protocol.shouldTerminate() && connected && (read = in.read()) >= 0) {
                 T nextMessage =  encdec.decodeNextByte((byte) read);
                 if (nextMessage != null) {
-                    send(nextMessage);
+                    protocol.process((String) nextMessage);
                 }
             }
         } catch (IOException ex) {
@@ -57,6 +58,11 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
 
     @Override
     public void send(T msg) {
-        protocol.process((String) msg);
+        try {
+            out.write(encdec.encode(msg));
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
