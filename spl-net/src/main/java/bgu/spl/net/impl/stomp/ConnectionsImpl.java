@@ -14,12 +14,19 @@ public class ConnectionsImpl<T> implements Connections<T> {
     private Map<String, User> users;
     private Map<String, List<User>> topics;
     private int nextId;
+    private  int msgId;
 
     public ConnectionsImpl() {
         this.connections = new ConcurrentHashMap<>();
         this.users = new HashMap<>();
         this.topics = new HashMap<>();
         nextId = 0;
+        msgId=0;
+    }
+
+    public int upMsgId() {
+        msgId++;
+        return msgId;
     }
 
     public boolean send(int connectionId, T msg) {
@@ -38,7 +45,7 @@ public class ConnectionsImpl<T> implements Connections<T> {
     @Override
     public void disconnect(int connectionId) {
         for(String topic : topics.keySet())
-            topics.get(topic).remove(connectionId);
+            topics.get(topic).remove(connectionId);//crashes here
         try {
             connections.get(connectionId).close();
         } catch (IOException e) {

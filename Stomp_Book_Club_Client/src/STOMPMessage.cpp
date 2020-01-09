@@ -16,7 +16,7 @@ STOMPMessage::STOMPMessage(string frame) {
             else
             {
                 bool header = true;
-                if (line == "") {
+                if (line == "") {//doest recognize the space between the headers and the body
                     header = false;
                     lineIndex = lineIndex + 1;
                 }

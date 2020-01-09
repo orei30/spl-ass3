@@ -20,4 +20,6 @@ public interface Connections<T> {
     void addUserToTopic(String topic, User user);
 
     void deleteUserFromTopic(String topic, User user);
+
+    int upMsgId();
 }

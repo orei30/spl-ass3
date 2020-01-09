@@ -203,7 +203,6 @@ void Client::logout()
 
 void Client::messageRecieved(STOMPMessage message)
 {
-    // cout << message.get() << endl;
     if (message.getCommand() == "CONNECTED")
     {
         cout << "Login successful" << endl;

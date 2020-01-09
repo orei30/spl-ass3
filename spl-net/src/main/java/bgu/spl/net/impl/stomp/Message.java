@@ -19,6 +19,7 @@ public class Message {
         String[] detailes = msg.split("\n");
         command = detailes[0];
         headers = new HashMap<>();
+        body="";
         int i = 1;
         while (!detailes[i].equals("")) {
             addHeader(detailes[i]);
@@ -61,7 +62,7 @@ public class Message {
     public String toString() {
         String headersString = "";
         for (Map.Entry<String, String> header : headers.entrySet())
-            headersString = header.getKey() + ":" + header.getValue() + "\n";
+            headersString = headersString + header.getKey() + ":" + header.getValue() + "\n";
         if(getBody() == "")
             return command + "\n" + headersString + "\n" + '\u0000';
         else

@@ -12,13 +12,11 @@ public class StompMessageEncoderDecoderImpl implements StompMessageEncoderDecode
         if (nextByte == '\u0000') {
             return popString();
         }
-
         pushByte(nextByte);
         return null;
     }
 
     public byte[] encode(String message) {
-        System.out.println(message);
         return message.getBytes();
     }
 
