@@ -19,20 +19,15 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             String username = msg.getHeader("login");
             String passcode = msg.getHeader("passcode");
             user = connections.getUser(username);
-            System.out.println(username);
             if(user == null) {
-                System.out.println("2");
                 user = new User(username, passcode, connectionId);
                 connections.addNewUser(user);
                 Message retmsg = new Message();
                 retmsg.setCommand("CONNECTED");
                 retmsg.addHeader("version:1.2");
                 user.logIn();
-                System.out.println("6");
                 connections.send(connectionId, retmsg.toString());
-                System.out.println("7");
             } else{
-                System.out.println("3");
                 if(user.getPassword().equals(passcode)) {
                     //TODO: send connected frame
                     if(user.isConnected()) {
@@ -46,9 +41,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
                         retmsg.setCommand("CONNECTED");
                         retmsg.addHeader("version:1.2");
                         user.logIn();
-                        System.out.println("1");
                         connections.send(connectionId, retmsg.toString());
-                        System.out.println("2");
                     }
                 } else {
                     //TODO: wrong passcode frame
@@ -57,7 +50,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
                     retmsg.addHeader("message:Wrong password");
                     retmsg.setBody("Wrong password");
                     connections.send(connectionId, retmsg.toString());
-                    connections.disconnect(connectionId);
+//                    connections.disconnect(connectionId);
                 }
             }
         }
@@ -92,7 +85,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             retmsg.addHeader("destination:" + topic);
             retmsg.setBody(messageBody);
             connections.send(topic, retmsg.toString());
-//            connections.send(topic);
         }
         if(msg.getCommand().equals("DISCONNECT")) {
             Integer receiptId = Integer.valueOf(msg.getHeader("receipt"));

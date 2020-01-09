@@ -2,6 +2,7 @@ package bgu.spl.net.impl.stomp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Message {
 
@@ -15,7 +16,6 @@ public class Message {
     }
 
     public Message(String msg) {
-        System.out.println("message: " + msg);
         String[] detailes = msg.split("\n");
         command = detailes[0];
         headers = new HashMap<>();
@@ -63,8 +63,8 @@ public class Message {
         for (Map.Entry<String, String> header : headers.entrySet())
             headersString = header.getKey() + ":" + header.getValue() + "\n";
         if(getBody() == "")
-            return command + "\n" + headersString + "\n^@";
+            return command + "\n" + headersString + "\n" + '\u0000';
         else
-            return command + "\n" + headersString + "\n" + getBody() + "\n^@";
+            return command + "\n" + headersString + "\n" + getBody() + "\n" + '\u0000';
     }
 }

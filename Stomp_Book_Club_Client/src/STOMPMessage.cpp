@@ -4,7 +4,7 @@ STOMPMessage::STOMPMessage() : _command(""), _headers(), _body("") {};
 
 STOMPMessage::STOMPMessage(string frame) {
     istringstream streamFrame(frame);
-    int lineIndex = 0;
+    int lineIndex(0);
     std::string line;
     while (getline(streamFrame, line))
     {
@@ -22,9 +22,9 @@ STOMPMessage::STOMPMessage(string frame) {
                 }
                 if (header)
                 {
-                    int colonIndex = line.find(":");
-                    string title = line.substr(0, colonIndex);
-                    string value = line.substr(colonIndex + 1);
+                    int colonIndex(line.find(":"));
+                    string title(line.substr(0, colonIndex));
+                    string value(line.substr(colonIndex + 1));
                     addHeader(title, value);
                     lineIndex = lineIndex + 1;
                 }
@@ -56,7 +56,7 @@ void STOMPMessage::addHeader(string headerName, string headerValue) {
 }
 
 string STOMPMessage::getHeader(string title) {
-    return _headers.find(title)->first;
+    return _headers.find(title)->second;
 }
 
 void STOMPMessage::addBody(string body) {
@@ -68,9 +68,13 @@ string STOMPMessage::getBody() {
 }
 
 string STOMPMessage::get() {
-    string headersString = "";
+    string headersString("");
     for (pair<string, string> header : _headers)
         headersString = headersString + header.first + ":" + header.second + "\n";
-    return _command + "\n" + headersString + _body + "\n^@";
+    if(_body == "")
+        return _command + "\n" + headersString + "\n^@";
+    else 
+        return _command + "\n" + headersString + "\n" + _body + "\n^@";
+
 }
 

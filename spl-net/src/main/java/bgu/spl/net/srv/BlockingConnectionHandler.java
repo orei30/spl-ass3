@@ -22,15 +22,16 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
     private volatile boolean connected = true;
     private Connections<String> connections;
 
-    public BlockingConnectionHandler(Socket sock, MessageEncoderDecoder<T> reader, StompMessagingProtocol<T> protocol) {
+    public BlockingConnectionHandler(Socket sock, MessageEncoderDecoder<T> reader, StompMessagingProtocol<T> protocol, Connections connections) {
         this.sock = sock;
         this.encdec = reader;
         this.protocol = protocol;
-        this.connections = new ConnectionsImpl();
+        this.connections = connections;
     }
 
     @Override
     public void run() {
+        // TODO: move connections initialize to base server
         protocol.start(connections.addConnection(this), connections);
         try (Socket sock = this.sock) { //just for automatic closing
             int read;
@@ -39,7 +40,7 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
             out = new BufferedOutputStream(sock.getOutputStream());
 
             while (!protocol.shouldTerminate() && connected && (read = in.read()) >= 0) {
-                T nextMessage =  encdec.decodeNextByte((byte) read);
+                T nextMessage = encdec.decodeNextByte((byte) read);
                 if (nextMessage != null) {
                     protocol.process((String) nextMessage);
                 }
@@ -58,6 +59,7 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
 
     @Override
     public void send(T msg) {
+        System.out.println(msg);
         try {
             out.write(encdec.encode(msg));
             out.flush();

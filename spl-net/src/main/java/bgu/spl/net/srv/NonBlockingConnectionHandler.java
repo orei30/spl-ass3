@@ -28,12 +28,13 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
             MessageEncoderDecoder<T> reader,
             StompMessagingProtocol<T> protocol,
             SocketChannel chan,
-            Reactor reactor) {
+            Reactor reactor,
+            Connections connectons) {
         this.chan = chan;
         this.encdec = reader;
         this.protocol = protocol;
         this.reactor = reactor;
-        this.connections = new ConnectionsImpl();
+        this.connections = connectons;
         protocol.start(connections.addConnection(this), connections);
     }
 
@@ -127,7 +128,10 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
 
     @Override
     public void send(T msg) {
+        System.out.println(msg.toString());
         writeQueue.add(ByteBuffer.wrap(encdec.encode(msg)));
+        System.out.println("2");
         reactor.updateInterestedOps(chan, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+        System.out.println("3");
     }
 }

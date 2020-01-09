@@ -8,6 +8,9 @@
 #include <unordered_map>
 #include <vector>
 #include <connectionHandler.h>
+#include <book.h>
+#include <ineventory.h>
+#include <STOMPMessage.h>
 
 using namespace std;
 
@@ -15,11 +18,9 @@ class Client {
     private:
         string _userName;
         bool _connected;
-        unordered_map<string, int> _subscriptions;
-        int _subscriptionId;
         vector<string> _reciepts;
         ConnectionHandler* _connectionHandler;
-        unordered_map<string, string> _bookLenders;
+        Inventory _inventory;
     public:
         Client(string);
         ~Client();
@@ -27,19 +28,15 @@ class Client {
         void setUserName(string);
         void sendDataToServer();
         void getDataFromServer();
-        int subscribe(string);
-        int newReciept();
-        void updateReciept(int, string);
-        void lenderBook(string, string);
-        string getLender(string);
+        int newReciept(string);
         void login();
         void joinGenre();
         void exitGenre();
         void addBook();
-        void boroowBook();
+        void borrowBook();
         void returnBook();
         void genreStatus();
         void logout();
-        // void messageRecieved(STOMPMessage);
+        void messageRecieved(STOMPMessage);
 };
 #endif

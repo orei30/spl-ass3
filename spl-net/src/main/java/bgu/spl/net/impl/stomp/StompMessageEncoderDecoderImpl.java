@@ -14,11 +14,12 @@ public class StompMessageEncoderDecoderImpl implements StompMessageEncoderDecode
         }
 
         pushByte(nextByte);
-        return null; //not a line yet
+        return null;
     }
 
     public byte[] encode(String message) {
-        return (message).getBytes();
+        System.out.println(message);
+        return message.getBytes();
     }
 
     private void pushByte(byte nextByte) {
@@ -34,6 +35,7 @@ public class StompMessageEncoderDecoderImpl implements StompMessageEncoderDecode
         //this is not actually required as it is the default encoding in java.
         String result = new String(bytes, 0, len, StandardCharsets.UTF_8);
         len = 0;
+        System.out.println(result);
         return result;
     }
 }
