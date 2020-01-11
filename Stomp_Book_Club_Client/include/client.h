@@ -23,6 +23,8 @@ class Client {
         Inventory _inventory;
     public:
         Client(string);
+        Client(const Client&);
+        Client & operator=(const Client&);
         ~Client();
         string getUserName();
         void setUserName(string);

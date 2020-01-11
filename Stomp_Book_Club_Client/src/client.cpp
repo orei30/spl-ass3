@@ -2,7 +2,22 @@
 #include <connectionHandler.h>
 #include <client.h>
 
-Client::Client(string username) : _connected(false), _userName(username), _reciepts(), _connectionHandler() {}
+Client::Client(string username) : _userName(username), _connected(false), _reciepts(), _connectionHandler(), _inventory() {}
+
+Client::Client(const Client& other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory) {}
+
+Client & Client::operator=(const Client& other) {
+    if (this == &other) {
+        return *this;
+    }
+    delete _connectionHandler;
+    _userName = other._userName;
+    _connected = other._connected;
+    _reciepts = other._reciepts;
+    _connectionHandler = other._connectionHandler;
+    _inventory = other._inventory;
+    return *this;
+}
 
 Client::~Client()
 {
@@ -235,7 +250,7 @@ void Client::messageRecieved(STOMPMessage message)
             if (!_inventory.bookValid(genre, bookName))
             {
                 size_t space_pos = messageBody.find(" ");
-                string userName = messageBody.substr(space_pos + 1);
+                string userName = messageBody.substr(0, space_pos);
                 STOMPMessage stompMessage;
                 stompMessage.setCommand("SEND");
                 stompMessage.addHeader("destination", genre);
@@ -293,7 +308,7 @@ void Client::messageRecieved(STOMPMessage message)
         if (_reciepts.at(0) == "&")
         {
             _reciepts[id - 1].erase(0, 1);
-            cout << "Joined club " + _reciepts[id - 1] << endl;
+            cout << "Exited club " + _reciepts[id - 1] << endl;
         }
         else
         {

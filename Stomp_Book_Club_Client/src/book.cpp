@@ -2,6 +2,8 @@
 
 Book::Book(string name, string lender, string genre, string status) : _name(name), _lender(lender), _genre(genre), _status(status) {}
 
+Book::Book() : _name(), _lender(), _genre(), _status() {}
+
 string Book::getName() {
  return _name;
 }

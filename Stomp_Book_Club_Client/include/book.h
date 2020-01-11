@@ -11,6 +11,7 @@ class Book {
         string _genre;
         string _status;
     public:
+        Book();
         Book(string, string, string, string);
         string getName();
         void setLender(string);
