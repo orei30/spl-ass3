@@ -84,6 +84,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             retmsg.setCommand("MESSAGE");
             retmsg.addHeader("destination:" + topic);
             retmsg.addHeader("Message-id:"+connections.upMsgId());
+            retmsg.addHeader("subscription:"+connectionId);
             retmsg.setBody(messageBody);
             connections.send(topic, retmsg.toString());
         }

@@ -8,25 +8,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConnectionsImpl<T> implements Connections<T> {
     private Map<Integer, ConnectionHandler<T>> connections;
-    private Map<String, User> users;
+    private Map<String, User> users;//TODO: consider change the keys for id. will affect the isConnected() method.
     private Map<String, List<User>> topics;
     private int nextId;
-    private  int msgId;
+    private AtomicInteger msgId;
 
     public ConnectionsImpl() {
         this.connections = new ConcurrentHashMap<>();
         this.users = new HashMap<>();
         this.topics = new HashMap<>();
         nextId = 0;
-        msgId=0;
+        msgId= new AtomicInteger(0);
     }
 
     public int upMsgId() {
-        msgId++;
-        return msgId;
+        int val;
+        do {
+            val = msgId.get();
+        } while (!msgId.compareAndSet(val, val + 1));
+        return msgId.intValue();
     }
 
     public boolean send(int connectionId, T msg) {
@@ -44,8 +48,9 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     @Override
     public void disconnect(int connectionId) {
-        for(String topic : topics.keySet())
-            topics.get(topic).remove(connectionId);//crashes here
+        for(String topic : topics.keySet()) {
+            topics.get(topic).remove(connectionId);//TODO: topics.get(topic) is a list of users, remove(connectionId) cant find the relevant user
+        }
         try {
             connections.get(connectionId).close();
         } catch (IOException e) {

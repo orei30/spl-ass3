@@ -33,7 +33,7 @@ public class StompMessageEncoderDecoderImpl implements StompMessageEncoderDecode
         //this is not actually required as it is the default encoding in java.
         String result = new String(bytes, 0, len, StandardCharsets.UTF_8);
         len = 0;
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 }

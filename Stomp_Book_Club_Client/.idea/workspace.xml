@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4f1113b-e2c2-4992-b586-c0ff7f96eb76" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/STOMPMessage.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/STOMPMessage.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/StompBookClubClient" beforeDir="false" afterPath="$PROJECT_DIR$/bin/StompBookClubClient" afterDir="false" />
@@ -19,16 +18,11 @@
       <change beforePath="$PROJECT_DIR$/bin/client.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/client.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/connectionHandler.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/connectionHandler.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/inventory.o" beforeDir="false" afterPath="$PROJECT_DIR$/bin/inventory.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/STOMPMessage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/STOMPMessage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/Connections.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/Connections.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/ConnectionsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/ConnectionsImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/StompMessageEncoderDecoderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/StompMessageEncoderDecoderImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/StompMessagingProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/src/main/java/bgu/spl/net/impl/stomp/StompMessagingProtocolImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/Connections.class" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/Connections.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/ConnectionsImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/ConnectionsImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/Message.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/StompMessageEncoderDecoderImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../spl-net/target/classes/bgu/spl/net/impl/stomp/StompMessageEncoderDecoderImpl.class" afterDir="false" />
@@ -93,6 +87,7 @@
       <workItem from="1578573273841" duration="5608000" />
       <workItem from="1578581488537" duration="5000" />
       <workItem from="1578583670385" duration="4000" />
+      <workItem from="1578831870549" duration="3457000" />
     </task>
     <servers />
   </component>
@@ -108,9 +103,9 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1578580669958" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578583671000">
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578830266336">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578583671000" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578830266336" />
   </component>
 </project>

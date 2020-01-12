@@ -128,10 +128,10 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
 
     @Override
     public void send(T msg) {
-        System.out.println(msg.toString());
+//        System.out.println(msg.toString());
         writeQueue.add(ByteBuffer.wrap(encdec.encode(msg)));
-        System.out.println("2");
+//        System.out.println("2");
         reactor.updateInterestedOps(chan, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-        System.out.println("3");
+//        System.out.println("3");
     }
 }
