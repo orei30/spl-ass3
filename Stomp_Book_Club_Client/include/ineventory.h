@@ -15,7 +15,7 @@ class Inventory {
         Inventory();
         int initializeGenre(string);
         int getGenreId(string);
-        Book getBook(string, string);
+        Book &getBook(string, string);
         bool bookValid(string, string);
         void addBookToGenre(string, Book);
         void removeBookFromGenre(string, Book);

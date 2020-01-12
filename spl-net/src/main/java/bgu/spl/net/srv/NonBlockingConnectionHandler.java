@@ -43,7 +43,8 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
 
         boolean success = false;
         try {
-            success = chan.read(buf) != -1;
+            if (!isClosed())
+                success = chan.read(buf) != -1;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -72,7 +73,7 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
 
     public synchronized void close() {
         try {
-            while(!writeQueue.isEmpty()) {
+            while (!writeQueue.isEmpty()) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
@@ -130,8 +131,6 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
     public void send(T msg) {
         System.out.println(msg.toString());
         writeQueue.add(ByteBuffer.wrap(encdec.encode(msg)));
-        System.out.println("2");
         reactor.updateInterestedOps(chan, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-        System.out.println("3");
     }
 }

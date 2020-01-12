@@ -1,0 +1,7 @@
+login 127.0.0.1:5555 ori 123
+
+login 127.0.0.1:5555 lior 456
+
+join sci-fi
+
+add sci-fi

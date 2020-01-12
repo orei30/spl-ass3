@@ -4,10 +4,12 @@
 
 Client::Client(string username) : _userName(username), _connected(false), _reciepts(), _connectionHandler(), _inventory() {}
 
-Client::Client(const Client& other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory) {}
+Client::Client(const Client &other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory) {}
 
-Client & Client::operator=(const Client& other) {
-    if (this == &other) {
+Client &Client::operator=(const Client &other)
+{
+    if (this == &other)
+    {
         return *this;
     }
     delete _connectionHandler;
@@ -74,7 +76,8 @@ void Client::getDataFromServer()
             string frame;
             if (!_connectionHandler->getFrameAscii(frame, '\0'))
             {
-                cout << "Disconnected. Exiting...\n" << endl;
+                cout << "Disconnected. Exiting...\n"
+                     << endl;
                 break;
             }
             STOMPMessage message(frame);
@@ -172,6 +175,7 @@ void Client::borrowBook()
     {
         cout << "Could not connect to server" << endl;
     }
+    _inventory.addBookToGenre(genre, Book(bookName, "", genre, "waiting"));
 }
 void Client::returnBook()
 {
@@ -180,7 +184,7 @@ void Client::returnBook()
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
-    Book book(_inventory.getBook(genre, bookName));
+    Book &book = _inventory.getBook(genre, bookName);
     stompMessage.addBody("return " + bookName + " to " + book.getLender());
     string message(stompMessage.get());
     if (!_connectionHandler->sendFrameAscii(message, '\0'))
@@ -247,8 +251,10 @@ void Client::messageRecieved(STOMPMessage message)
         {
             auto index = messageBody.find_last_of(' ');
             string bookName(messageBody.substr(++index));
-            if (!_inventory.bookValid(genre, bookName))
+            Book &book = _inventory.getBook(genre, bookName);
+            if (book.getStatus() == "waiting")
             {
+                book.setStatus("taking"); //TODO: syncronized it
                 size_t space_pos = messageBody.find(" ");
                 string userName = messageBody.substr(0, space_pos);
                 STOMPMessage stompMessage;
@@ -260,33 +266,37 @@ void Client::messageRecieved(STOMPMessage message)
                 {
                     cout << "Could not connect to server" << endl;
                 }
-                _inventory.addBookToGenre(genre, Book(bookName, userName, genre, "valid"));
             }
         }
         if (messageBody.find("Taking") != string::npos)
         {
             auto index = messageBody.find_last_of(' ');
             string userName(messageBody.substr(++index));
+            auto fromIndex = messageBody.find_last_of(" from");
+            string bookName = messageBody.substr(7, fromIndex);
+            Book &book = _inventory.getBook(genre, bookName);
             if (userName == getUserName())
             {
-                stringstream stream(messageBody);
-                string bookName;
-                stream >> bookName;
-                stream >> bookName;
-                _inventory.getBook(genre, bookName).setStatus("borrowed");
+                if (userName == _userName)
+                    book.setStatus("borrowed");
+            }
+            if (book.getStatus() == "taking")
+            {
+                book.setLender(userName);
+                book.setStatus("valid");
             }
         }
         if (messageBody.find("Returning") != string::npos)
         {
             auto index = messageBody.find_last_of(' ');
             string userName(messageBody.substr(++index));
+            auto fromIndex = messageBody.find_last_of(" to");
+            string bookName = messageBody.substr(7, fromIndex);
             if (userName == getUserName())
             {
-                stringstream stream(messageBody);
-                string bookName;
-                stream >> bookName;
-                stream >> bookName;
-                _inventory.getBook(genre, bookName).setStatus("valid");
+                Book &book = _inventory.getBook(genre, bookName);
+                if (userName == _userName)
+                    book.setStatus("valid");
             }
         }
         if (messageBody.find("status") != string::npos)

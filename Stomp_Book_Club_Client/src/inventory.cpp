@@ -2,6 +2,8 @@
 
 Inventory::Inventory() : _books(), _genres() {};
 
+Book book;
+
 int Inventory::initializeGenre(string genre){
     _genres.push_back(genre);
     _books.insert({genre, {}});
@@ -17,14 +19,13 @@ int Inventory::getGenreId(string genre) {
     return -1;
 }
 
-Book Inventory::getBook(string genre, string bookName) {
+Book &Inventory::getBook(string genre, string bookName) {
     vector<Book> genreBooks(_books.find(genre)->second);
     for(size_t i(0); i < genreBooks.size(); ++i) {
         if(genreBooks[i].getName() == bookName) {
             return genreBooks[i];
         }
     }
-    Book book;
     return book;
 }
 
@@ -60,8 +61,9 @@ string Inventory::status(string genre) {
     if(genreBooks.empty())
         return "";
     string status;
-    for(size_t i(0); i < genreBooks.size() - 1; ++i) {
-        status = status + genreBooks[i].getName() + ", ";
+    for(size_t i(0); i < genreBooks.size(); ++i) {
+        if(genreBooks[i].getStatus() == "valid")
+            status = status + genreBooks[i].getName() + ", ";
     }
-    return status + genreBooks[genreBooks.size() - 1].getName();
+    return status.substr(0, status.size()-2);
 }

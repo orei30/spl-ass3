@@ -10,28 +10,13 @@
       <change beforePath="$PROJECT_DIR$/../Boost_Echo_Client/makefile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Boost_Echo_Client/src/connectionHandler.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Boost_Echo_Client/src/echoClient.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/STOMPMessage.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/STOMPMessage.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/StompBookClubClient" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/StompBookClubClient" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/StompBookClubClient.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/StompBookClubClient.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/book.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/book.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/client.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/client.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/connectionHandler.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/connectionHandler.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/inventory.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/bin/inventory.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/src/STOMPMessage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/src/STOMPMessage.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Stomp_Book_Club_Client/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Stomp_Book_Club_Client/src/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/ConnectionsImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/ConnectionsImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/StompMessagingProtocolImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/StompMessagingProtocolImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/StompServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/stomp/StompServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ActorThreadPool.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ActorThreadPool.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BaseServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BaseServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BlockingConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BlockingConnectionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/NonBlockingConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/NonBlockingConnectionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/NonBlockingConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/NonBlockingConnectionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/Reactor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/Reactor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/Server$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/Server$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/Server.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +66,7 @@
     <configuration name="StompServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bgu.spl.net.impl.stomp.StompServer" />
       <module name="spl-net" />
-      <option name="PROGRAM_PARAMETERS" value="5555 tcp" />
+      <option name="PROGRAM_PARAMETERS" value="5555 reactor" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="bgu.spl.net.impl.stomp.*" />
@@ -140,9 +125,10 @@
     </state>
     <state x="3540" y="192" key="#Project_Structure/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578505033984" />
     <state x="588" y="214" width="800" height="677" key="#Project_Structure/67.27.1853.1053@67.27.1853.1053" timestamp="1578327091562" />
-    <state x="1678" y="252" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578508283692">
+    <state x="1678" y="396" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578859095382">
       <screen x="1080" y="0" width="1920" height="1080" />
     </state>
+    <state x="1678" y="396" key="#com.intellij.execution.impl.EditConfigurationsDialog/1080.0.1920.1080/3000.0.1920.1080/0.0.1080.1920@1080.0.1920.1080" timestamp="1578859095382" />
     <state x="1678" y="252" key="#com.intellij.execution.impl.EditConfigurationsDialog/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578508283692" />
     <state x="3598" y="252" key="#com.intellij.execution.impl.EditConfigurationsDialog/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578505085436" />
     <state x="644" y="273" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578498377058" />
@@ -169,29 +155,33 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1578500672309" />
-    <state width="1874" height="287" key="GridCell.Tab.0.bottom" timestamp="1578782031727">
-      <screen x="3000" y="0" width="1920" height="1080" />
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1578869182177">
+      <screen x="1080" y="0" width="1920" height="1080" />
     </state>
-    <state width="1807" height="287" key="GridCell.Tab.0.bottom/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578508263143" />
-    <state width="1874" height="287" key="GridCell.Tab.0.bottom/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578782031726" />
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom/1080.0.1920.1080/3000.0.1920.1080/0.0.1080.1920@1080.0.1920.1080" timestamp="1578866451260" />
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578869182177" />
+    <state width="1874" height="287" key="GridCell.Tab.0.bottom/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578784103445" />
     <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578588345723" />
-    <state width="1874" height="287" key="GridCell.Tab.0.center" timestamp="1578782031726">
-      <screen x="3000" y="0" width="1920" height="1080" />
+    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1578869182177">
+      <screen x="1080" y="0" width="1920" height="1080" />
     </state>
-    <state width="1807" height="287" key="GridCell.Tab.0.center/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578508263143" />
-    <state width="1874" height="287" key="GridCell.Tab.0.center/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578782031726" />
+    <state width="1807" height="278" key="GridCell.Tab.0.center/1080.0.1920.1080/3000.0.1920.1080/0.0.1080.1920@1080.0.1920.1080" timestamp="1578866451260" />
+    <state width="1807" height="278" key="GridCell.Tab.0.center/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578869182177" />
+    <state width="1874" height="287" key="GridCell.Tab.0.center/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578784103445" />
     <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578588345722" />
-    <state width="1874" height="287" key="GridCell.Tab.0.left" timestamp="1578782031726">
-      <screen x="3000" y="0" width="1920" height="1080" />
+    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1578869182176">
+      <screen x="1080" y="0" width="1920" height="1080" />
     </state>
-    <state width="1807" height="287" key="GridCell.Tab.0.left/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578508263143" />
-    <state width="1874" height="287" key="GridCell.Tab.0.left/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578782031726" />
+    <state width="1807" height="278" key="GridCell.Tab.0.left/1080.0.1920.1080/3000.0.1920.1080/0.0.1080.1920@1080.0.1920.1080" timestamp="1578866451260" />
+    <state width="1807" height="278" key="GridCell.Tab.0.left/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578869182176" />
+    <state width="1874" height="287" key="GridCell.Tab.0.left/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578784103445" />
     <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578588345722" />
-    <state width="1874" height="287" key="GridCell.Tab.0.right" timestamp="1578782031726">
-      <screen x="3000" y="0" width="1920" height="1080" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1578869182177">
+      <screen x="1080" y="0" width="1920" height="1080" />
     </state>
-    <state width="1807" height="287" key="GridCell.Tab.0.right/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578508263143" />
-    <state width="1874" height="287" key="GridCell.Tab.0.right/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578782031726" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right/1080.0.1920.1080/3000.0.1920.1080/0.0.1080.1920@1080.0.1920.1080" timestamp="1578866451260" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@1080.0.1920.1080" timestamp="1578869182177" />
+    <state width="1874" height="287" key="GridCell.Tab.0.right/1080.0.1920.1080/3000.0.1920.1080/0.27.1080.1893@3000.0.1920.1080" timestamp="1578784103445" />
     <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578588345723" />
     <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578573308414">
       <screen x="67" y="27" width="1853" height="1053" />
