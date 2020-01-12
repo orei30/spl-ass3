@@ -29,12 +29,12 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
             StompMessagingProtocol<T> protocol,
             SocketChannel chan,
             Reactor reactor,
-            Connections connectons) {
+            Connections connections) {
         this.chan = chan;
         this.encdec = reader;
         this.protocol = protocol;
         this.reactor = reactor;
-        this.connections = connectons;
+        this.connections = connections;
         protocol.start(connections.addConnection(this), connections);
     }
 
