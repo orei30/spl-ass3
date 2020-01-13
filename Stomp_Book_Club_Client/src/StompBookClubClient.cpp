@@ -14,4 +14,3 @@ int main (int argc, char *argv[]) {
     delete client;
     return 0;
 }
-//TODO: there mamroy leak if user logged in twice

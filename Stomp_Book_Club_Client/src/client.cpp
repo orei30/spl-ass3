@@ -157,6 +157,7 @@ void Client::addBook()
     string genre, bookName;
     cin >> genre;
     getline(cin, bookName);
+    bookName.erase(0, 1);
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
@@ -173,6 +174,7 @@ void Client::borrowBook()
     string genre, bookName;
     cin >> genre;
     getline(cin, bookName);
+    bookName.erase(0, 1);
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
@@ -189,6 +191,7 @@ void Client::returnBook()
     string genre, bookName;
     cin >> genre;
     getline(cin, bookName);
+    bookName.erase(0, 1);
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
@@ -317,7 +320,7 @@ void Client::messageRecieved(STOMPMessage message)
     if (message.getCommand() == "RECEIPT")
     {
         int id(stoi(message.getHeader("receipt-id")));
-        if (_reciepts.at(0) == "&")
+        if (_reciepts[id - 1].at(0) == '&')
         {
             _reciepts[id - 1].erase(0, 1);
             cout << "Exited club " + _reciepts[id - 1] << endl;
