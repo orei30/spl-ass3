@@ -21,8 +21,9 @@ class Client {
         vector<string> _reciepts;
         ConnectionHandler* _connectionHandler;
         Inventory _inventory;
+        bool _terminate;
     public:
-        Client(string);
+        Client();
         Client(const Client&);
         Client & operator=(const Client&);
         ~Client();
@@ -40,5 +41,6 @@ class Client {
         void genreStatus();
         void logout();
         void messageRecieved(STOMPMessage);
+        void startGetDataFromServer();
 };
 #endif

@@ -2,9 +2,9 @@
 #include <connectionHandler.h>
 #include <client.h>
 
-Client::Client(string username) : _userName(username), _connected(false), _reciepts(), _connectionHandler(), _inventory() {}
+Client::Client() : _userName(), _connected(false), _reciepts(), _connectionHandler(), _inventory(), _terminate(false) {}
 
-Client::Client(const Client &other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory) {}
+Client::Client(const Client &other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory), _terminate(other._terminate) {}
 
 Client &Client::operator=(const Client &other)
 {
@@ -18,6 +18,7 @@ Client &Client::operator=(const Client &other)
     _reciepts = other._reciepts;
     _connectionHandler = other._connectionHandler;
     _inventory = other._inventory;
+    _terminate = other._terminate;
     return *this;
 }
 
@@ -44,7 +45,7 @@ int Client::newReciept(string receipt)
 
 void Client::sendDataToServer()
 {
-    while (true)
+    while (!_terminate)
     {
         string command;
         cin >> command;
@@ -69,7 +70,7 @@ void Client::sendDataToServer()
 
 void Client::getDataFromServer()
 {
-    while (true)
+    while (!_terminate)
     {
         if (_connected)
         {
@@ -95,26 +96,31 @@ void Client::login()
     int colonIndex(hostAndPort.find(":"));
     string host(hostAndPort.substr(0, colonIndex));
     short port(stoi(hostAndPort.substr(colonIndex + 1)));
-    if (_connectionHandler == nullptr || !_connected)
+    if (!_connected)
     {
+        if (_connectionHandler != nullptr)
+        {
+            delete _connectionHandler;
+            _connectionHandler = nullptr;
+        }
         _connectionHandler = new ConnectionHandler(host, port);
         if (!_connectionHandler->connect())
         {
             cerr << "Could not connect to server" << endl;
             return;
         }
-    }
-    _connected = true;
-    STOMPMessage stompMessage;
-    stompMessage.setCommand("CONNECT");
-    stompMessage.addHeader("accept-version", "1.2");
-    stompMessage.addHeader("host", host);
-    stompMessage.addHeader("login", username);
-    stompMessage.addHeader("passcode", password);
-    string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
+        _connected = true;
+        STOMPMessage stompMessage;
+        stompMessage.setCommand("CONNECT");
+        stompMessage.addHeader("accept-version", "1.2");
+        stompMessage.addHeader("host", host);
+        stompMessage.addHeader("login", username);
+        stompMessage.addHeader("passcode", password);
+        string message(stompMessage.get());
+        if (!_connectionHandler->sendFrameAscii(message, '\0'))
+        {
+            cout << "Could not connect to server" << endl;
+        }
     }
 }
 void Client::joinGenre()
@@ -149,14 +155,14 @@ void Client::exitGenre()
 void Client::addBook()
 {
     string genre, bookName;
-    cin >> genre >> bookName;
+    cin >> genre;
+    getline(cin, bookName);
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
     stompMessage.addBody(getUserName() + " had added the book " + bookName);
     string message(stompMessage.get());
-    Book book(bookName, getUserName(), genre, "valid");
-    _inventory.addBookToGenre(genre, book);
+    _inventory.addBookToGenre(genre, new Book(bookName, getUserName(), genre, "valid"));
     if (!_connectionHandler->sendFrameAscii(message, '\0'))
     {
         cout << "Could not connect to server" << endl;
@@ -165,7 +171,8 @@ void Client::addBook()
 void Client::borrowBook()
 {
     string genre, bookName;
-    cin >> genre >> bookName;
+    cin >> genre;
+    getline(cin, bookName);
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
@@ -175,17 +182,18 @@ void Client::borrowBook()
     {
         cout << "Could not connect to server" << endl;
     }
-    _inventory.addBookToGenre(genre, Book(bookName, "", genre, "waiting"));
+    _inventory.addBookToGenre(genre, new Book(bookName, "", genre, "waiting"));
 }
 void Client::returnBook()
 {
     string genre, bookName;
-    cin >> genre >> bookName;
+    cin >> genre;
+    getline(cin, bookName);
     STOMPMessage stompMessage;
     stompMessage.setCommand("SEND");
     stompMessage.addHeader("destination", genre);
-    Book &book = _inventory.getBook(genre, bookName);
-    stompMessage.addBody("return " + bookName + " to " + book.getLender());
+    Book *book = _inventory.getBook(genre, bookName);
+    stompMessage.addBody("Returning " + bookName + " to " + book->getLender());
     string message(stompMessage.get());
     if (!_connectionHandler->sendFrameAscii(message, '\0'))
     {
@@ -218,6 +226,7 @@ void Client::logout()
     {
         cout << "Could not connect to server" << endl;
     }
+    _terminate = true;
 }
 
 void Client::messageRecieved(STOMPMessage message)
@@ -251,10 +260,10 @@ void Client::messageRecieved(STOMPMessage message)
         {
             auto index = messageBody.find_last_of(' ');
             string bookName(messageBody.substr(++index));
-            Book &book = _inventory.getBook(genre, bookName);
-            if (book.getStatus() == "waiting")
+            Book *book = _inventory.getBook(genre, bookName);
+            if (book != nullptr && book->getStatus() == "waiting")
             {
-                book.setStatus("taking"); //TODO: syncronized it
+                book->setStatus("taking"); //TODO: syncronized it
                 size_t space_pos = messageBody.find(" ");
                 string userName = messageBody.substr(0, space_pos);
                 STOMPMessage stompMessage;
@@ -270,34 +279,27 @@ void Client::messageRecieved(STOMPMessage message)
         }
         if (messageBody.find("Taking") != string::npos)
         {
-            auto index = messageBody.find_last_of(' ');
+            int index = messageBody.find_last_of(' ');
             string userName(messageBody.substr(++index));
-            auto fromIndex = messageBody.find_last_of(" from");
-            string bookName = messageBody.substr(7, fromIndex);
-            Book &book = _inventory.getBook(genre, bookName);
+            string bookName = messageBody.substr(7, messageBody.size() - 13 - userName.size());
+            Book *book = _inventory.getBook(genre, bookName);
             if (userName == getUserName())
             {
-                if (userName == _userName)
-                    book.setStatus("borrowed");
+                book->setStatus("borrowed");
             }
-            if (book.getStatus() == "taking")
+            if (book != nullptr && book->getStatus() == "taking")
             {
-                book.setLender(userName);
-                book.setStatus("valid");
+                book->setLender(userName);
+                book->setStatus("valid");
             }
         }
         if (messageBody.find("Returning") != string::npos)
         {
             auto index = messageBody.find_last_of(' ');
             string userName(messageBody.substr(++index));
-            auto fromIndex = messageBody.find_last_of(" to");
-            string bookName = messageBody.substr(7, fromIndex);
+            string bookName = messageBody.substr(10, messageBody.size() - 14 - userName.size());
             if (userName == getUserName())
-            {
-                Book &book = _inventory.getBook(genre, bookName);
-                if (userName == _userName)
-                    book.setStatus("valid");
-            }
+                _inventory.getBook(genre, bookName)->setStatus("valid");
         }
         if (messageBody.find("status") != string::npos)
         {
