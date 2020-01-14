@@ -16,7 +16,8 @@ Inventory::~Inventory() {
 int Inventory::initializeGenre(string genre)
 {
     _genres.push_back(genre);
-    _books.insert({genre, {}});
+    if(_books.find(genre)!=_books.end())
+        _books.insert({genre, {}});
     return _genres.size() - 1;
 }
 

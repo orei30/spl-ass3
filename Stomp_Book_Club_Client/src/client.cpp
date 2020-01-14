@@ -163,6 +163,7 @@ void Client::addBook()
     stompMessage.addHeader("destination", genre);
     stompMessage.addBody(getUserName() + " had added the book " + bookName);
     string message(stompMessage.get());
+    cout<<message<< endl;
     _inventory.addBookToGenre(genre, new Book(bookName, getUserName(), genre, "valid"));
     if (!_connectionHandler->sendFrameAscii(message, '\0'))
     {

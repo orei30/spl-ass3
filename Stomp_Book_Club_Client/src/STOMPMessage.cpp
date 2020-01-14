@@ -37,10 +37,6 @@ STOMPMessage::STOMPMessage(string frame) : _command(""), _headers(), _body("")
                     addBody(line);
                     lineIndex = lineIndex + 1;
                 }
-                else
-                {
-                    lineIndex = 0;
-                }
             }
         }
     }

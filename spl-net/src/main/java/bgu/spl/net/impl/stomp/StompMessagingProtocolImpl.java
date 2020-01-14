@@ -41,6 +41,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
                         retmsg.setCommand("CONNECTED");
                         retmsg.addHeader("version:1.2");
                         user.logIn();
+                        user.setConnectionHandlerId(connectionId);
                         connections.send(connectionId, retmsg.toString());
                     }
                 } else {
@@ -65,6 +66,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             retmsg.setCommand("RECEIPT");
             retmsg.addHeader("receipt-id:" + receiptId);
             connections.send(connectionId, retmsg.toString());
+
         }
         if(msg.getCommand().equals("UNSUBSCRIBE")) {
             Integer id = Integer.valueOf(msg.getHeader("id"));
@@ -82,9 +84,9 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             //TODO: create message and send it;
             Message retmsg = new Message();
             retmsg.setCommand("MESSAGE");
-            retmsg.addHeader("destination:" + topic);
-            retmsg.addHeader("Message-id:"+connections.upMsgId());
             retmsg.addHeader("subscription:"+connectionId);
+            retmsg.addHeader("Message-id:"+connections.upMsgId());
+            retmsg.addHeader("destination:" + topic);
             retmsg.setBody(messageBody);
             connections.send(topic, retmsg.toString());
         }

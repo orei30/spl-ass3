@@ -42,8 +42,9 @@ public class ConnectionsImpl<T> implements Connections<T> {
     }
 
     public void send(String channel, T msg) {
-        for(User user : topics.get(channel))
-            send(user.getConnectionHandlerId(), msg);
+        if(topics.get(channel)!=null)
+            for(User user : topics.get(channel))
+                send(user.getConnectionHandlerId(), msg);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     @Override
     public void addUserToTopic(String topic, User user) {
-        List topicUsersList = topics.get(topic);
+        List<User> topicUsersList = topics.get(topic);
         if(topicUsersList == null) {
             topicUsersList = new ArrayList();
             topics.put(topic, topicUsersList);
