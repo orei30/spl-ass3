@@ -29,6 +29,14 @@ int Inventory::getGenreId(string genre)
     return -1;
 }
 
+void Inventory::exitGenre(string genre) {
+    for (size_t i(0); i < _genres.size(); ++i)
+    {
+        if(_genres[i] == genre)
+            _genres.erase (_genres.begin()+i);
+    }
+}
+
 Book *Inventory::getBook(string genre, string bookName)
 {
     vector<Book *> genreBooks(_books.find(genre)->second);

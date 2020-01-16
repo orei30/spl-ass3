@@ -21,7 +21,8 @@ class Client {
         vector<string> _reciepts;
         ConnectionHandler* _connectionHandler;
         Inventory _inventory;
-        bool _terminate;
+        bool _terminateRead;
+        bool _terminateSend;
     public:
         Client();
         Client(const Client&);

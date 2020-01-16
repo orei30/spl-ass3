@@ -17,6 +17,7 @@ class Inventory {
         ~Inventory();
         int initializeGenre(string);
         int getGenreId(string);
+        void exitGenre(string);
         Book* getBook(string, string);
         bool bookValid(string, string);
         void addBookToGenre(string, Book*);

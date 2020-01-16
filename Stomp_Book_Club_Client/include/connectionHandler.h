@@ -4,9 +4,10 @@
 #include <string>
 #include <iostream>
 #include <boost/asio.hpp>
-
+#include <mutex>
 
 using boost::asio::ip::tcp;
+using namespace std;
 
 class ConnectionHandler {
 private:
@@ -14,7 +15,7 @@ private:
 	const short port_;
 	boost::asio::io_service io_service_;   // Provides core I/O functionality
 	tcp::socket socket_; 
- 
+    mutex _mutex;
 public:
     ConnectionHandler(std::string host, short port);
     virtual ~ConnectionHandler();

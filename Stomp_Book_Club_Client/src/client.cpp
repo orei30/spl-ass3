@@ -2,9 +2,9 @@
 #include <connectionHandler.h>
 #include <client.h>
 
-Client::Client() : _userName(), _connected(false), _reciepts(), _connectionHandler(), _inventory(), _terminate(false) {}
+Client::Client() : _userName(), _connected(false), _reciepts(), _connectionHandler(), _inventory(), _terminateRead(false), _terminateSend(false) {}
 
-Client::Client(const Client &other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory), _terminate(other._terminate) {}
+Client::Client(const Client &other) : _userName(other._userName), _connected(other._connected), _reciepts(other._reciepts), _connectionHandler(other._connectionHandler), _inventory(other._inventory), _terminateRead(other._terminateRead), _terminateSend(other._terminateSend) {}
 
 Client &Client::operator=(const Client &other)
 {
@@ -18,7 +18,8 @@ Client &Client::operator=(const Client &other)
     _reciepts = other._reciepts;
     _connectionHandler = other._connectionHandler;
     _inventory = other._inventory;
-    _terminate = other._terminate;
+    _terminateRead = other._terminateRead;
+    _terminateSend = other._terminateSend;
     return *this;
 }
 
@@ -45,7 +46,7 @@ int Client::newReciept(string receipt)
 
 void Client::sendDataToServer()
 {
-    while (!_terminate)
+    while (!_terminateSend)
     {
         string command;
         cin >> command;
@@ -70,19 +71,13 @@ void Client::sendDataToServer()
 
 void Client::getDataFromServer()
 {
-    while (!_terminate)
+    while (!_terminateRead)
     {
         if (_connected)
         {
             string frame;
-            if (!_connectionHandler->getFrameAscii(frame, '\0'))
-            {
-                cout << "Disconnected. Exiting...\n"
-                     << endl;
-                break;
-            }
+            !_connectionHandler->getFrameAscii(frame, '\0');
             STOMPMessage message(frame);
-            cout << message.get() << endl;
             messageRecieved(message);
         }
     }
@@ -104,11 +99,7 @@ void Client::login()
             _connectionHandler = nullptr;
         }
         _connectionHandler = new ConnectionHandler(host, port);
-        if (!_connectionHandler->connect())
-        {
-            cerr << "Could not connect to server" << endl;
-            return;
-        }
+        _connectionHandler->connect();
         _connected = true;
         STOMPMessage stompMessage;
         stompMessage.setCommand("CONNECT");
@@ -117,10 +108,7 @@ void Client::login()
         stompMessage.addHeader("login", username);
         stompMessage.addHeader("passcode", password);
         string message(stompMessage.get());
-        if (!_connectionHandler->sendFrameAscii(message, '\0'))
-        {
-            cout << "Could not connect to server" << endl;
-        }
+        _connectionHandler->sendFrameAscii(message, '\0');
     }
 }
 void Client::joinGenre()
@@ -133,10 +121,7 @@ void Client::joinGenre()
     stompMessage.addHeader("id", to_string(_inventory.initializeGenre(genre)));
     stompMessage.addHeader("receipt", to_string(newReciept("#" + genre)));
     string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
+    _connectionHandler->sendFrameAscii(message, '\0');
 }
 void Client::exitGenre()
 {
@@ -147,10 +132,7 @@ void Client::exitGenre()
     stompMessage.addHeader("id", to_string(_inventory.getGenreId(genre)));
     stompMessage.addHeader("receipt", to_string(newReciept("&" + genre)));
     string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
+    _connectionHandler->sendFrameAscii(message, '\0');
 }
 void Client::addBook()
 {
@@ -163,12 +145,8 @@ void Client::addBook()
     stompMessage.addHeader("destination", genre);
     stompMessage.addBody(getUserName() + " had added the book " + bookName);
     string message(stompMessage.get());
-    cout<<message<< endl;
     _inventory.addBookToGenre(genre, new Book(bookName, getUserName(), genre, "valid"));
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
+    _connectionHandler->sendFrameAscii(message, '\0');
 }
 void Client::borrowBook()
 {
@@ -181,10 +159,7 @@ void Client::borrowBook()
     stompMessage.addHeader("destination", genre);
     stompMessage.addBody(getUserName() + " wish to borrow " + bookName);
     string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
+    _connectionHandler->sendFrameAscii(message, '\0');
     _inventory.addBookToGenre(genre, new Book(bookName, "", genre, "waiting"));
 }
 void Client::returnBook()
@@ -199,10 +174,7 @@ void Client::returnBook()
     Book *book = _inventory.getBook(genre, bookName);
     stompMessage.addBody("Returning " + bookName + " to " + book->getLender());
     string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
+    _connectionHandler->sendFrameAscii(message, '\0');
     _inventory.removeBookFromGenre(genre, book);
 }
 void Client::genreStatus()
@@ -214,10 +186,7 @@ void Client::genreStatus()
     stompMessage.addHeader("destination", genre);
     stompMessage.addBody("book status");
     string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
+    _connectionHandler->sendFrameAscii(message, '\0');
 }
 
 void Client::logout()
@@ -226,11 +195,8 @@ void Client::logout()
     stompMessage.setCommand("DISCONNECT");
     stompMessage.addHeader("receipt", to_string(newReciept("#logout")));
     string message(stompMessage.get());
-    if (!_connectionHandler->sendFrameAscii(message, '\0'))
-    {
-        cout << "Could not connect to server" << endl;
-    }
-    _terminate = true;
+    _connectionHandler->sendFrameAscii(message, '\0');
+    _terminateSend = true;
 }
 
 void Client::messageRecieved(STOMPMessage message)
@@ -243,6 +209,7 @@ void Client::messageRecieved(STOMPMessage message)
     {
         string genre(message.getHeader("destination"));
         string messageBody(message.getBody());
+        cout << genre + ":" + messageBody << endl;
         if (messageBody.find("borrow") != string::npos)
         {
             auto index = messageBody.find_last_of(' ');
@@ -254,10 +221,7 @@ void Client::messageRecieved(STOMPMessage message)
                 stompMessage.addHeader("destination", genre);
                 stompMessage.addBody(getUserName() + " has " + bookName);
                 string message(stompMessage.get());
-                if (!_connectionHandler->sendFrameAscii(message, '\0'))
-                {
-                    cout << "Could not connect to server" << endl;
-                }
+                _connectionHandler->sendFrameAscii(message, '\0');
             }
         }
         if (messageBody.find("has") != string::npos)
@@ -267,7 +231,7 @@ void Client::messageRecieved(STOMPMessage message)
             Book *book = _inventory.getBook(genre, bookName);
             if (book != nullptr && book->getStatus() == "waiting")
             {
-                book->setStatus("taking"); //TODO: syncronized it
+                book->setStatus("taking");
                 size_t space_pos = messageBody.find(" ");
                 string userName = messageBody.substr(0, space_pos);
                 STOMPMessage stompMessage;
@@ -275,10 +239,7 @@ void Client::messageRecieved(STOMPMessage message)
                 stompMessage.addHeader("destination", genre);
                 stompMessage.addBody("Taking " + bookName + " from " + userName);
                 string message(stompMessage.get());
-                if (!_connectionHandler->sendFrameAscii(message, '\0'))
-                {
-                    cout << "Could not connect to server" << endl;
-                }
+                _connectionHandler->sendFrameAscii(message, '\0');
             }
         }
         if (messageBody.find("Taking") != string::npos)
@@ -312,10 +273,7 @@ void Client::messageRecieved(STOMPMessage message)
             stompMessage.addHeader("destination", genre);
             stompMessage.addBody(getUserName() + ":" + _inventory.status(genre));
             string message(stompMessage.get());
-            if (!_connectionHandler->sendFrameAscii(message, '\0'))
-            {
-                cout << "Could not connect to server" << endl;
-            }
+            _connectionHandler->sendFrameAscii(message, '\0');
         }
     }
     if (message.getCommand() == "RECEIPT")
@@ -331,6 +289,7 @@ void Client::messageRecieved(STOMPMessage message)
             _reciepts[id - 1].erase(0, 1);
             if (_reciepts[id - 1] == "logout")
             {
+                _terminateRead = true;
                 _connected = false;
                 _connectionHandler->close();
             }

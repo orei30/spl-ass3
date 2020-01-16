@@ -49,10 +49,8 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     @Override
     public void disconnect(int connectionId) {
-        for(String topic : topics.keySet()) {
-            //TODO: topics.get(topic) is a list of users, remove(connectionId) cant find the relevant user
+        for(String topic : topics.keySet())
             topics.get(topic).removeIf(user -> user.getConnectionHandlerId() == connectionId);
-        }
         try {
             connections.get(connectionId).close();
         } catch (IOException e) {

@@ -29,7 +29,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
                 connections.send(connectionId, retmsg.toString());
             } else{
                 if(user.getPassword().equals(passcode)) {
-                    //TODO: send connected frame
                     if(user.isConnected()) {
                         Message retmsg = new Message();
                         retmsg.setCommand("ERROR");
@@ -45,7 +44,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
                         connections.send(connectionId, retmsg.toString());
                     }
                 } else {
-                    //TODO: wrong passcode frame
                     Message retmsg = new Message();
                     retmsg.setCommand("ERROR");
                     retmsg.addHeader("message:Wrong password");
@@ -61,7 +59,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             Integer receiptId = Integer.valueOf(msg.getHeader("receipt"));
             user.addTopic(id, genre);
             connections.addUserToTopic(genre, user);
-            //TODO: send receipt;
             Message retmsg = new Message();
             retmsg.setCommand("RECEIPT");
             retmsg.addHeader("receipt-id:" + receiptId);
@@ -72,7 +69,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             Integer id = Integer.valueOf(msg.getHeader("id"));
             Integer receiptId = Integer.valueOf(msg.getHeader("receipt"));
             connections.deleteUserFromTopic(user.deleteTopicFromUser(id), user);
-            //TODO: send receipt;
             Message retmsg = new Message();
             retmsg.setCommand("RECEIPT");
             retmsg.addHeader("receipt-id:" + receiptId);
@@ -81,7 +77,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
         if(msg.getCommand().equals("SEND")) {
             String topic  = msg.getHeader("destination");
             String messageBody = msg.getBody();
-            //TODO: create message and send it;
             Message retmsg = new Message();
             retmsg.setCommand("MESSAGE");
             retmsg.addHeader("subscription:"+connectionId);
@@ -97,7 +92,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
             retmsg.setCommand("RECEIPT");
             retmsg.addHeader("receipt-id:" + receiptId);
             connections.send(connectionId, retmsg.toString());
-            //TODO: disconnect after sending all needed receipts
             connections.disconnect(connectionId);
         }
     }
